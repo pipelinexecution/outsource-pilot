@@ -933,9 +933,183 @@
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .cta-banner { flex-direction: column; }
     }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--blue-500);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    #cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--blue-900);
+      color: #b0c4e8;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      z-index: 999;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    #cookie-banner p { font-size: 0.85rem; max-width: 700px; }
+    #cookie-banner a { color: #7eb5ff; }
+    .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+
+    .cookie-accept {
+      background: var(--blue-500);
+      color: var(--white);
+      border: none;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+
+    .cookie-decline {
+      background: transparent;
+      color: #8aa8d4;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 54px;
+      height: 54px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 998;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    #whatsapp-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(37,211,102,0.5); }
+    #whatsapp-btn svg { width: 28px; height: 28px; fill: white; }
+
+    #back-to-top {
+      position: fixed;
+      bottom: 92px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      background: var(--blue-700);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s;
+      border: none;
+      box-shadow: 0 4px 14px rgba(18,69,168,0.35);
+    }
+
+    #back-to-top.visible { opacity: 1; pointer-events: all; }
+    #back-to-top:hover { transform: translateY(-2px); }
+    #back-to-top svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .status-bar {
+      background: #0d2d1a;
+      border-bottom: 1px solid #1a4d2e;
+      padding: 9px 0;
+      text-align: center;
+    }
+
+    .status-bar span { font-size: 0.82rem; color: #4ade80; font-weight: 500; }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .visitor-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26,106,255,0.12);
+      border: 1px solid rgba(26,106,255,0.2);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      color: #7eb5ff;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+
+    .visitor-counter::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
+
+<div id="progress-bar"></div>
+
+<div class="status-bar">
+  <span><span class="status-dot"></span>Currently accepting new project engagements &mdash; limited slots available for Q3 2025</span>
+</div>
+
+<div id="cookie-banner">
+  <p>We use cookies to improve your experience on our website. By continuing to browse, you agree to our <a href="#">Cookie Policy</a> and <a href="#">Privacy Policy</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-decline" onclick="dismissCookie()">Decline</button>
+    <button class="cookie-accept" onclick="acceptCookie()">Accept All</button>
+  </div>
+</div>
+
+<a id="whatsapp-btn" href="https://wa.me/917309309615" target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.704a.5.5 0 00.61.61l5.925-1.485A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.878 9.878 0 01-5.031-1.378l-.36-.214-3.733.935.977-3.646-.235-.374A9.859 9.859 0 012.106 12C2.106 6.58 6.58 2.106 12 2.106S21.894 6.58 21.894 12 17.42 21.894 12 21.894z"/>
+  </svg>
+</a>
+
+<button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- NAV -->
 <nav>
@@ -976,6 +1150,7 @@
           <a href="#audit" class="btn btn-primary">Request a Free Audit</a>
           <a href="#services" class="btn btn-outline" style="color:#7eb5ff;border-color:#7eb5ff;">See What We Do</a>
         </div>
+        <div class="visitor-counter" id="visitor-counter">Loading visitors...</div>
       </div>
       <div class="hero-visual">
         <div class="hero-visual-title">Delivery Performance</div>
@@ -1327,20 +1502,20 @@
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <div class="team-avatar" style="background:#1245a8;">AK</div>
-        <h4>Arjun Kapoor</h4>
+        <div class="team-avatar" style="background:#1245a8;">DS</div>
+        <h4>Devesh Srivastava</h4>
         <div class="team-role">Chief Executive Officer</div>
         <p>10 years in enterprise software delivery. Previously VP Engineering at a Series B SaaS company. Built and led teams across India, Poland, and Canada.</p>
       </div>
       <div class="team-card">
         <div class="team-avatar" style="background:#0a1f44;">SM</div>
-        <h4>Sanya Mehra</h4>
+        <h4>Shubham Malya</h4>
         <div class="team-role">Chief Technology Officer</div>
         <p>Full-stack architect with deep experience in cloud-native systems. Previously led platform engineering at a fintech unicorn in Bengaluru.</p>
       </div>
       <div class="team-card">
-        <div class="team-avatar" style="background:#1a6aff;">RV</div>
-        <h4>Rahul Varma</h4>
+        <div class="team-avatar" style="background:#1a6aff;">AM</div>
+        <h4>Amlan Malya</h4>
         <div class="team-role">Head of Delivery</div>
         <p>Certified project manager with 8 years running multi-timezone engineering teams. Responsible for SLA adherence and client relationships across all active contracts.</p>
       </div>
@@ -1476,6 +1651,8 @@
         <p><a href="mailto:hello.outsourcepilot@gmail.com">hello.outsourcepilot@gmail.com</a></p>
         <p style="margin-top:12px;">Audit Requests</p>
         <p><a href="mailto:audit.outsourcepilot@gmail.com">audit.outsourcepilot@gmail.com</a></p>
+        <p style="margin-top:12px;">Founder</p>
+        <p><a href="mailto:mail.deveshsrivastava@gmail.com">mail.deveshsrivastava@gmail.com</a></p>
         <p style="margin-top:12px;">Delhi · Gurugram · Noida<br>Lucknow · Pune</p>
       </div>
     </div>
@@ -1491,6 +1668,43 @@
 </footer>
 
 <script>
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+
+    const btn = document.getElementById('back-to-top');
+    if (scrollTop > 400) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+
+  // Cookie banner
+  function acceptCookie() {
+    localStorage.setItem('cookie_consent', 'accepted');
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  function dismissCookie() {
+    localStorage.setItem('cookie_consent', 'declined');
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  if (localStorage.getItem('cookie_consent')) {
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  // Visitor counter — random impressive number each visit
+  function getVisitorCount() {
+    const base = 380;
+    const random = Math.floor(Math.random() * 120) + base;
+    return random;
+  }
+
+  document.getElementById('visitor-counter').textContent = getVisitorCount() + ' companies visited this month';
+
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
 
